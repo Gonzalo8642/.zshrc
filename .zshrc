@@ -106,6 +106,7 @@ DEFAULT_USER=$USER
 prompt_context(){}
 
 # Enables zsh-syntax-hightlighting
+# Install at by running "brew install zsh-syntax-highlighting"
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 prompt_dir () {
