@@ -68,7 +68,16 @@ plugins=(
   OSX
   copyfile
   extract
+  taskworrior
+  zsh-autosuggestions
+  colored-man-pages
+  react-native
 )
+
+# Change the highlight color
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=23'
+# CTRL + SPACE executes the suggested path
+bindkey '^ ' autosuggest-accept
 
 source $ZSH/oh-my-zsh.sh
 
@@ -106,9 +115,63 @@ DEFAULT_USER=$USER
 prompt_context(){}
 
 # Enables zsh-syntax-hightlighting
-# Install at by running "brew install zsh-syntax-highlighting"
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Set alias
+alias college='~/Google\ Drive/College/NIU/2019\ Spring/'
+alias markdown="open -a typora"
 prompt_dir () {
     prompt_segment blue black '%2~'
+}
+# ANDROID_HOME environment variable
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+export PATH="/usr/local/opt/node@10/bin:$PATH"
+# Go development
+export GOPATH="${HOME}/.go"
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+
+# Print out useful info about my setup
+function helpme() {
+	echo "************************* Shortcuts *************************" | colorText light-green
+	echo "Use CTRL + SPACE to execute hightlighted commad"
+	echo 
+	echo "************************* Aliases  *************************" | colorText blue
+	echo "$(echo "college" | colorText green) - cd into google drive college folder"
+	echo "$(echo "markdown" | colorText green) - Open markdown editor Typora"
+	echo
+	echo "************************* Utis  *************************" | colorText blue
+	echo "Record terminal as gif    - $(echo "ttyrec {filename}" | colorText green)"
+	echo "Convert recording to gif  - $(echo "ttygif {filename} -f" | colorText green)"
+}
+
+# function to color text in terminal
+# Usage: echo "sometext" | colorText red
+function colorText() {
+	noColor='\033[0m'
+	col='\033[0m'
+	case $1 in
+		black)        col=$'\e[30m' ;;
+		red)          col=$'\e[31m' ;;
+		green)        col=$'\e[32m' ;;
+		yellow)       col=$'\e[33m' ;;
+		blue)         col=$'\e[34m' ;;
+		purple)       col=$'\e[35m' ;;
+		cyan)         col=$'\e[36m' ;;
+		white)        col=$'\e[97m' ;;
+		light-gray)   col=$'\e[37m' ;;
+		dark-gray)    col=$'\e[90m' ;;
+		light-red)     col=$'\e[91m' ;;
+		light-green)   col=$'\e[92m' ;;
+		light-blue)    col=$'\e[94m' ;;
+		light-purple)  col=$'\e[95m' ;;
+		light-cyan)    col=$'\e[96m' ;;
+	esac
+	read input
+	echo -e "${col}$input${noColor}"
 }
